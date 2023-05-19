@@ -1,0 +1,879 @@
+ROUTE3 T
+Router>enable
+Router#
+Router#configure terminal
+Enter configuration commands, one per line.  End with CNTL/Z.
+Router(config)#interface FastEthernet0/0
+Router(config-if)#ip address 192.168.3.1 255.255.255.248
+Router(config-if)#
+Router(config-if)#exit
+Router(config)#interface Serial0/3/0
+Router(config-if)#
+Router(config-if)#exit
+Router(config)#interface Serial0/2/0
+Router(config-if)#ip address 10.10.11.2 255.255.255.252
+Router(config-if)#ip address 10.10.11.2 255.255.255.252
+Router(config-if)#no shutdown
+Router(config-if)#
+%LINK-5-CHANGED: Interface Serial0/2/0, changed state to up
+
+%LINEPROTO-5-UPDOWN: Line protocol on Interface Serial0/2/0, changed state to up
+
+Router(config-if)#exit
+Router(config)#
+Router(config)#route ei
+Router(config)#route eigrp 100
+Router(config-router)#net
+Router(config-router)#network 192.1683.0 0.0.0.7
+                              ^
+% Invalid input detected at '^' marker.
+	
+Router(config-router)#network 192.168.3.0 0.0.0.7
+Router(config-router)#net
+Router(config-router)#network 10.10.2.0 0.0.0.3
+Router(config-router)#
+
+Router(config)#route ei
+Router(config)#route eigrp 100
+Router(config-router)#net
+Router(config-router)#network 192.1683.0 0.0.0.7
+                              ^
+% Invalid input detected at '^' marker.
+	
+Router(config-router)#network 192.168.3.0 0.0.0.7
+Router(config-router)#net
+Router(config-router)#network 10.10.2.0 0.0.0.3
+Router(config-router)#ne
+Router(config-router)#net
+Router(config-router)#network 10.10.10.0 0.0.0.3
+Router(config-router)#network 192.168.1.0 0.0.0.7
+Router(config-router)#network 192.168.2.0 0.0.0.7
+Router(config-router)#network 10.10.11.0 0.0.0.3
+Router(config-router)#
+%DUAL-5-NBRCHANGE: IP-EIGRP 100: Neighbor 10.10.11.1 (Serial0/2/0) is up: new adjacency
+
+Router>ena
+Router#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+Router(config)#host R-ST
+R-ST(config)#line vty
+% Incomplete command.
+R-ST(config)#line vty 0 15
+R-ST(config-line)#pas
+R-ST(config-line)#password 123
+R-ST(config-line)#login
+R-ST(config-line)#exit
+R-ST(config)#ena
+R-ST(config)#enable se
+R-ST(config)#enable secret 12345
+R-ST(config)#do wr
+Building configuration...
+[OK]
+R-ST(config)#exit
+R-ST#
+%SYS-5-CONFIG_I: Configured from console by console
+
+R-ST#sh run
+Building configuration...
+
+Current configuration : 1154 bytes
+!
+version 12.4
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+no service password-encryption
+!
+hostname R-ST
+!
+!
+!
+enable secret 5 $1$mERr$/Q/mbs3O9oHsKR7rNG4e81
+!
+!
+!
+!
+!
+!
+no ip cef
+no ipv6 cef
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+spanning-tree mode pvst
+!
+!
+!
+!
+!
+!
+interface FastEthernet0/0
+ ip address 192.168.3.1 255.255.255.248
+ duplex auto
+ speed auto
+!
+interface FastEthernet0/1
+ no ip address
+ duplex auto
+ speed auto
+ shutdown
+!
+interface Serial0/2/0
+ ip address 10.10.11.2 255.255.255.252
+!
+interface Serial0/2/1
+ no ip address
+ clock rate 2000000
+ shutdown
+!
+interface Serial0/3/0
+ ip address 10.10.10.1 255.255.255.252
+ clock rate 2000000
+!
+interface Serial0/3/1
+ no ip address
+ clock rate 2000000
+ shutdown
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+router eigrp 100
+ network 192.168.1.0 0.0.0.7
+ network 10.10.10.0 0.0.0.3
+ network 192.168.2.0 0.0.0.7
+ network 192.168.3.0 0.0.0.7
+ network 10.10.2.0 0.0.0.3
+ network 10.10.11.0 0.0.0.3
+ auto-summary
+!
+ip classless
+!
+ip flow-export version 9
+!
+!
+!
+!
+!
+!
+!
+!
+line con 0
+!
+line aux 0
+!
+line vty 0 4
+ password 123
+ login
+line vty 5 15
+ password 123
+ login
+!
+!
+!
+end
+
+
+R-ST#wr
+Building configuration...
+[OK]
+R-ST#
+
+
+R-ST#copy st
+R-ST#copy startup-config 
+% Incomplete command.
+R-ST#copy run
+R-ST#copy running-config star
+R-ST#copy running-config startup-config 
+Destination filename [startup-config]? 
+Building configuration...
+[OK]
+R-ST#copy sta
+R-ST#copy startup-config tftp:
+Address or name of remote host []? 192.168.2.2
+Destination filename [R-ST-confg]? configuracion-route-ST
+
+Writing startup-config...!!
+[OK - 1206 bytes]
+
+1206 bytes copied in 0.006 secs (201000 bytes/sec)
+R-ST#exit
+
+--------------------------
+
+
+ROUTE2 INT
+Router(config)#route ie
+Router(config)#route ei
+Router(config)#route eigrp 100
+Router(config-router)#net
+Router(config-router)#network 10.10.10.0 0.0.0.3
+Router(config-router)#net
+Router(config-router)#network 192.168.2.0 0.0.0.7
+Router(config-router)#network 192.168.1.0 0.0.0.7
+Router(config-router)#
+%DUAL-5-NBRCHANGE: IP-EIGRP 100: Neighbor 10.10.10.1 (Serial0/3/0) is up: new adjacency
+
+Router(config)#route ei
+Router(config)#route eigrp 100
+Router(config-router)#net
+Router(config-router)#network 10.10.2.0 0.0.0.3
+Router(config-router)#network 192.168.3.0 0.0.0.7
+Router(config-router)#
+Router(config-router)#end
+Router#configure terminal
+Enter configuration commands, one per line.  End with CNTL/Z.
+Router(config)#interface Serial0/2/0
+Router(config-if)#
+%SYS-5-CONFIG_I: Configured from console by console
+ip address 10.10.11.1 255.255.255.252
+Router(config-if)#
+%DUAL-5-NBRCHANGE: IP-EIGRP 100: Neighbor 10.10.11.2 (Serial0/2/0) is up: new adjacency
+
+Internet>ena
+Internet#copy run
+Internet#copy running-config star
+Internet#copy running-config startup-config 
+Destination filename [startup-config]? 
+Building configuration...
+[OK]
+Internet#copy st
+Internet#copy startup-config tftp:
+Address or name of remote host []? 192.168.2.2
+Destination filename [Internet-confg]? 
+
+Writing startup-config...!!
+[OK - 1080 bytes]
+
+1080 bytes copied in 0.001 secs (1080000 bytes/sec)
+Internet#exit
+
+
+
+--------------
+ROUTE1 SP
+Router>en
+Router#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+Router(config)#route ei
+Router(config)#route eigrp 100
+Router(config-router)#net
+Router(config-router)#network 192.168.1.0 0.0.0.7
+Router(config-router)#network 10.10.10.0 0.0.0.3
+Router(config-router)#
+%DUAL-5-NBRCHANGE: IP-EIGRP 100: Neighbor 10.10.10.2 (Serial0/3/0) is up: new adjacency
+
+Router(config-router)#network 192.168.2.0 0.0.0.7
+Router(config-router)#exit
+Router(config)#
+
+Router>ena
+Router#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+Router(config)#host R-SP
+R-SP(config)#ip domain-name sp.com
+R-SP(config)#cr
+R-SP(config)#crypto ke
+R-SP(config)#crypto key gene
+R-SP(config)#crypto key generate rsa
+The name for the keys will be: R-SP.sp.com
+Choose the size of the key modulus in the range of 360 to 2048 for your
+  General Purpose Keys. Choosing a key modulus greater than 512 may take
+  a few minutes.
+
+How many bits in the modulus [512]: 2048
+% Generating 2048 bit RSA keys, keys will be non-exportable...[OK]
+
+R-SP(config)#ip ssh tim
+*mar. 1 0:14:37.932: %SSH-5-ENABLED: SSH 1.99 has been enabled
+R-SP(config)#ip ssh time-out 10
+R-SP(config)#ip ssh aut
+R-SP(config)#ip ssh authentication-retries 3
+R-SP(config)#username Ivan pas
+R-SP(config)#username admin password 123
+R-SP(config)#line
+R-SP(config)#line vt
+R-SP(config)#line vty 0 3
+R-SP(config-line)#pass
+R-SP(config-line)#password admin
+R-SP(config-line)#exe
+R-SP(config-line)#exec-timeout 5
+R-SP(config-line)#
+R-SP(config-line)#trans
+R-SP(config-line)#transport in
+R-SP(config-line)#transport input ssh
+R-SP(config-line)#login local
+R-SP(config-line)#exedo wr
+Building configuration...
+[OK]
+R-SP(config-line)#exit
+R-SP(config)#banner mot
+R-SP(config)#banner motd "SOLO PERSONAL AUTORIZADO, CHAVITA"
+R-SP(config)#do wr
+Building configuration...
+[OK]
+R-SP(config)#
+R-SP(config)#interface FastEthernet0/1
+R-SP(config-if)#no shutdown
+R-SP(config-if)#
+%LINK-5-CHANGED: Interface FastEthernet0/1, changed state to up
+
+R-SP(config-if)#exit
+R-SP(config)#interface FastEthernet0/1
+R-SP(config-if)#
+R-SP(config-if)#exit
+R-SP(config)#interface FastEthernet0/0
+R-SP(config-if)#
+R-SP(config-if)#exit
+R-SP(config)#interface FastEthernet0/1
+R-SP(config-if)#
+
+R-SP#copy ru
+R-SP#copy running-config s
+R-SP#copy running-config st
+R-SP#copy running-config startup-config 
+Destination filename [startup-config]? 
+?Bad filename
+%Error parsing filename (Bad file number)
+R-SP#copy ru
+R-SP#copy running-config star
+R-SP#copy running-config startup-config tftp:
+                                        ^
+% Invalid input detected at '^' marker.
+	
+R-SP#copy running-config startup-config tftp
+                                        ^
+% Invalid input detected at '^' marker.
+	
+R-SP#copy running-config startup-config 
+Destination filename [startup-config]? 
+Building configuration...
+[OK]
+R-SP#copy st
+R-SP#copy startup-config ftpt
+                            ^
+% Invalid input detected at '^' marker.
+	
+R-SP#copy startup-config tftp:
+Address or name of remote host []? 192.168.2.2
+Destination filename [R-SP-confg]? configuracion-router-SP
+
+Writing startup-config...!!
+[OK - 1259 bytes]
+
+1259 bytes copied in 0.013 secs (96846 bytes/sec)
+R-SP#
+---------------------------------
+SWITCH SP
+Switch(config)#host S-SP
+S-SP(config)#vlan 10
+S-SP(config-vlan)#name Datos
+S-SP(config-vlan)#exit
+S-SP(config)#vlan 20
+S-SP(config-vlan)#name Voz
+S-SP(config-vlan)#exit
+S-SP(config)#vlan 30
+S-SP(config-vlan)#name Reserva
+S-SP(config-vlan)#exit
+S-SP(config)#int fa 0/1-3
+                      ^
+% Invalid input detected at '^' marker.
+	
+S-SP(config)#int range fa 0/1-3
+S-SP(config-if-range)#sw
+S-SP(config-if-range)#switchport mode access 10
+                                             ^
+% Invalid input detected at '^' marker.
+	
+S-SP(config-if-range)#switchport mode access vlan 10
+                                             ^
+% Invalid input detected at '^' marker.
+	
+S-SP(config-if-range)#switchport mode access vlan Datos
+                                             ^
+% Invalid input detected at '^' marker.
+	
+S-SP(config-if-range)#switchport access 10
+                                        ^
+% Invalid input detected at '^' marker.
+	
+S-SP(config-if-range)#switchport access vlan 10
+S-SP(config-if-range)#sw
+S-SP(config-if-range)#switchport mode access
+S-SP(config-if-range)#exit
+S-SP(config)#int fa 0/24
+S-SP(config-if)#sw
+S-SP(config-if)#switchport access vlan 10
+S-SP(config-if)#sw
+S-SP(config-if)#switchport mode access
+S-SP(config-if)#exit
+S-SP(config)#int range fa 0/4-23
+S-SP(config-if-range)#sw
+S-SP(config-if-range)#switchport access vlan 30
+S-SP(config-if-range)#sh
+
+%LINK-5-CHANGED: Interface FastEthernet0/4, changed state to administratively down
+
+%LINK-5-CHANGED: Interface FastEthernet0/5, changed state to administratively down
+
+%LINK-5-CHANGED: Interface FastEthernet0/6, changed state to administratively down
+
+%LINK-5-CHANGED: Interface FastEthernet0/7, changed state to administratively down
+
+%LINK-5-CHANGED: Interface FastEthernet0/8, changed state to administratively down
+
+%LINK-5-CHANGED: Interface FastEthernet0/9, changed state to administratively down
+
+%LINK-5-CHANGED: Interface FastEthernet0/10, changed state to administratively down
+
+%LINK-5-CHANGED: Interface FastEthernet0/11, changed state to administratively down
+
+%LINK-5-CHANGED: Interface FastEthernet0/12, changed state to administratively down
+
+%LINK-5-CHANGED: Interface FastEthernet0/13, changed state to administratively down
+
+%LINK-5-CHANGED: Interface FastEthernet0/14, changed state to administratively down
+
+%LINK-5-CHANGED: Interface FastEthernet0/15, changed state to administratively down
+
+%LINK-5-CHANGED: Interface FastEthernet0/16, changed state to administratively down
+
+%LINK-5-CHANGED: Interface FastEthernet0/17, changed state to administratively down
+
+%LINK-5-CHANGED: Interface FastEthernet0/18, changed state to administratively down
+
+%LINK-5-CHANGED: Interface FastEthernet0/19, changed state to administratively down
+
+%LINK-5-CHANGED: Interface FastEthernet0/20, changed state to administratively down
+
+%LINK-5-CHANGED: Interface FastEthernet0/21, changed state to administratively down
+
+%LINK-5-CHANGED: Interface FastEthernet0/22, changed state to administratively down
+
+%LINK-5-CHANGED: Interface FastEthernet0/23, changed state to administratively down
+S-SP(config-if-range)#exit
+S-SP(config)#int giga 0/1-2
+                        ^
+% Invalid input detected at '^' marker.
+	
+S-SP(config)#int gig
+S-SP(config)#int gigabitEthernet 0/1
+S-SP(config-if)#s
+S-SP(config-if)#sw
+S-SP(config-if)#switchport access vlan 30
+S-SP(config-if)#sh
+
+%LINK-5-CHANGED: Interface GigabitEthernet0/1, changed state to administratively down
+S-SP(config-if)#exit
+S-SP(config)#int gig
+S-SP(config)#int gigabitEthernet 0/2
+S-SP(config-if)#sw
+S-SP(config-if)#switchport access vlan 30
+S-SP(config-if)#exit
+S-SP(config)#int gigabitEthernet 0/2
+S-SP(config-if)#sh
+
+%LINK-5-CHANGED: Interface GigabitEthernet0/2, changed state to administratively down
+S-SP(config-if)#exit
+S-SP(config)#do show vlan brief
+
+VLAN Name                             Status    Ports
+---- -------------------------------- --------- -------------------------------
+1    default                          active    
+10   Datos                            active    Fa0/1, Fa0/2, Fa0/3, Fa0/24
+20   Voz                              active    
+30   Reserva                          active    Fa0/4, Fa0/5, Fa0/6, Fa0/7
+                                                Fa0/8, Fa0/9, Fa0/10, Fa0/11
+                                                Fa0/12, Fa0/13, Fa0/14, Fa0/15
+                                                Fa0/16, Fa0/17, Fa0/18, Fa0/19
+                                                Fa0/20, Fa0/21, Fa0/22, Fa0/23
+                                                Gig0/1, Gig0/2
+1002 fddi-default                     active    
+1003 token-ring-default               active    
+1004 fddinet-default                  active    
+1005 trnet-default                    active    
+S-SP(config)#
+
+S-SP#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+S-SP(config)#int fa 0/1
+S-SP(config-if)#sw
+S-SP(config-if)#switchport mode access
+S-SP(config-if)#sw
+S-SP(config-if)#switchport port
+S-SP(config-if)#switchport port-security maxi
+S-SP(config-if)#switchport port-security maximum 1
+S-SP(config-if)#sw
+S-SP(config-if)#switchport port
+S-SP(config-if)#switchport port-security mac
+S-SP(config-if)#switchport port-security mac-address 
+%LINK-3-UPDOWN: Interface FastEthernet0/1, changed state to down
+
+%LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet0/1, changed state to down
+
+%LINK-5-CHANGED: Interface FastEthernet0/1, changed state to up
+
+%LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet0/1, changed state to up
+
+% Incomplete command.
+S-SP(config-if)#exit
+S-SP(config)#int fa 0/1
+S-SP(config-if)#psw
+S-SP(config-if)#switchport mode access
+S-SP(config-if)#sw
+S-SP(config-if)#switchport port
+S-SP(config-if)#switchport port-security ma
+S-SP(config-if)#switchport port-security max
+S-SP(config-if)#switchport port-security maximum 1
+S-SP(config-if)#sw
+S-SP(config-if)#switchport port
+S-SP(config-if)#switchport port-security mac
+S-SP(config-if)#switchport port-security mac-address 0004.9A5D.CA76
+Found duplicate mac-address 0004.9a5d.ca76.
+S-SP(config-if)#sw
+S-SP(config-if)#switchport port
+S-SP(config-if)#switchport port-security vio
+S-SP(config-if)#switchport port-security violation shutdown
+S-SP(config-if)#sw
+S-SP(config-if)#switchport port
+S-SP(config-if)#switchport port-security ag
+S-SP(config-if)#switchport port-security aging time 100
+S-SP(config-if)#exit
+S-SP(config)#exit
+S-SP#
+%SYS-5-CONFIG_I: Configured fshow port-security int fa 0/1show port-security int fa 0/1
+Port Security              : Disabled
+Port Status                : Secure-down
+Violation Mode             : Shutdown
+Aging Time                 : 100 mins
+Aging Type                 : Absolute
+SecureStatic Address Aging : Disabled
+Maximum MAC Addresses      : 1
+Total MAC Addresses        : 0
+Configured MAC Addresses   : 1
+Sticky MAC Addresses       : 0
+Last Source Address:Vlan   : 0000.0000.0000:0
+Security Violation Count   : 0
+
+S-SP#iniconf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+S-SP(config)#int fa 0/1
+S-SP(config-if)#sw
+S-SP(config-if)#switchport port
+S-SP(config-if)#switchport port-security 
+S-SP(config-if)#exit
+S-SP(config)#exit
+S-SP#
+%SYS-5-CONFIG_I: Configured fshow port-security int fa 0/1show port-security int fa 0/1
+Port Security              : Enabled
+Port Status                : Secure-up
+Violation Mode             : Shutdown
+Aging Time                 : 100 mins
+Aging Type                 : Absolute
+SecureStatic Address Aging : Disabled
+Maximum MAC Addresses      : 1
+Total MAC Addresses        : 1
+Configured MAC Addresses   : 1
+Sticky MAC Addresses       : 0
+Last Source Address:Vlan   : 0000.0000.0000:0
+Security Violation Count   : 0
+
+S-SP#
+%LINK-3-UPDOWN: Interface FastEthernet0/1, changed state to down
+
+%LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet0/1, changed state to down
+
+%LINK-5-CHANGED: Interface FastEthernet0/1, changed state to up
+
+%LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet0/1, changed state to up
+
+%LINK-5-CHANGED: Interface FastEthernet0/1, changed state to administratively down
+
+%LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet0/1, changed state to down
+
+S-SP#configure terminal
+Enter configuration commands, one per line.  End with CNTL/Z.
+S-SP(config)#interface FastEthernet0/1
+S-SP(config-if)#
+S-SP(config-if)#exit
+S-SP(config)#interface FastEthernet0/2
+S-SP(config-if)#
+S-SP(config-if)#exit
+S-SP(config)#interface FastEthernet0/1
+S-SP(config-if)#no shutdown
+S-SP(config-if)#
+%LINK-5-CHANGED: Interface FastEthernet0/1, changed state to up
+
+%LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet0/1, changed state to up
+
+S-SP(config-if)#ecit
+                 ^
+% Invalid input detected at '^' marker.
+	
+S-SP(config-if)#exit
+S-SP(config)#exit
+S-SP#
+%SYS-5-CONFIG_I: Configured from console by console
+
+S-SP#show port-security int fa 0/1
+Port Security              : Enabled
+Port Status                : Secure-up
+Violation Mode             : Shutdown
+Aging Time                 : 100 mins
+Aging Type                 : Absolute
+SecureStatic Address Aging : Disabled
+Maximum MAC Addresses      : 1
+Total MAC Addresses        : 1
+Configured MAC Addresses   : 1
+Sticky MAC Addresses       : 0
+Last Source Address:Vlan   : 00D0.D380.1630:10
+Security Violation Count   : 0
+
+S-SP#
+S-SP>ena
+S-SP#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+S-SP(config)#int range 0/1-3
+                       ^
+% Invalid input detected at '^' marker.
+	
+S-SP(config)#int range fa 0/1-3
+S-SP(config-if-range)#sw
+S-SP(config-if-range)#switchport por
+S-SP(config-if-range)#switchport port-security 
+S-SP(config-if-range)#exit
+S-SP(config)#exit
+S-SP#
+%SYS-5-CONFIG_I: Configured from console by console
+
+S-SP#show port-s
+S-SP#show port-security range fa 0/1-3
+                        ^
+% Invalid input detected at '^' marker.
+	
+S-SP#show port-security fa 0/2
+                        ^
+% Invalid input detected at '^' marker.
+	
+S-SP#show port-security
+Secure Port MaxSecureAddr CurrentAddr SecurityViolation Security Action
+               (Count)       (Count)        (Count)
+--------------------------------------------------------------------
+        Fa0/1        1          1                 0         Shutdown
+        Fa0/2        1          0                 0         Shutdown
+        Fa0/3        1          0                 0         Shutdown
+----------------------------------------------------------------------
+S-SP#
+S-SP(config)#vtp mode server
+Device mode already VTP SERVER.
+S-SP(config)#vtp 
+S-SP(config)#vtp do
+S-SP(config)#vtp domain chavita.com
+Changing VTP domain name from NULL to chavita.com
+S-SP(config)#vtp pass
+S-SP(config)#vtp password admin
+Setting device VLAN database password to admin
+S-SP(config)#
+---------------------------------------------------------------------------------------------
+Swicht Torreon
+Switch(config)#host S-T
+S-T(config)#int range fa 0/1-3
+S-T(config-if-range)#exit
+S-T(config)#vlan 10
+S-T(config-vlan)#name Datos
+S-T(config-vlan)#exit
+S-T(config)#vlan 20
+S-T(config-vlan)#name Voz
+S-T(config-vlan)#exit
+S-T(config)#vlan 30
+S-T(config-vlan)#name Reserva
+S-T(config-vlan)#exit
+S-T(config)#int range fa 0/1-3
+S-T(config-if-range)#sw
+S-T(config-if-range)#switchport access vlan 10
+S-T(config-if-range)#sw
+S-T(config-if-range)#switchport mode access
+S-T(config-if-range)#exit
+S-T(config)#int fa 0/24
+S-T(config-if)#sw
+S-T(config-if)#switchport access vlan 10
+S-T(config-if)#sw
+S-T(config-if)#switchport mode access
+S-T(config-if)#exit
+S-T(config)#int range fa 0/4-23
+S-T(config-if-range)#sw
+S-T(config-if-range)#switchport access vlan 30
+S-T(config-if-range)#sh
+
+%LINK-5-CHANGED: Interface FastEthernet0/4, changed state to administratively down
+
+%LINK-5-CHANGED: Interface FastEthernet0/5, changed state to administratively down
+
+%LINK-5-CHANGED: Interface FastEthernet0/6, changed state to administratively down
+
+%LINK-5-CHANGED: Interface FastEthernet0/7, changed state to administratively down
+
+%LINK-5-CHANGED: Interface FastEthernet0/8, changed state to administratively down
+
+%LINK-5-CHANGED: Interface FastEthernet0/9, changed state to administratively down
+
+%LINK-5-CHANGED: Interface FastEthernet0/10, changed state to administratively down
+
+%LINK-5-CHANGED: Interface FastEthernet0/11, changed state to administratively down
+
+%LINK-5-CHANGED: Interface FastEthernet0/12, changed state to administratively down
+
+%LINK-5-CHANGED: Interface FastEthernet0/13, changed state to administratively down
+
+%LINK-5-CHANGED: Interface FastEthernet0/14, changed state to administratively down
+
+%LINK-5-CHANGED: Interface FastEthernet0/15, changed state to administratively down
+
+%LINK-5-CHANGED: Interface FastEthernet0/16, changed state to administratively down
+
+%LINK-5-CHANGED: Interface FastEthernet0/17, changed state to administratively down
+
+%LINK-5-CHANGED: Interface FastEthernet0/18, changed state to administratively down
+
+%LINK-5-CHANGED: Interface FastEthernet0/19, changed state to administratively down
+
+%LINK-5-CHANGED: Interface FastEthernet0/20, changed state to administratively down
+
+%LINK-5-CHANGED: Interface FastEthernet0/21, changed state to administratively down
+
+%LINK-5-CHANGED: Interface FastEthernet0/22, changed state to administratively down
+
+%LINK-5-CHANGED: Interface FastEthernet0/23, changed state to administratively down
+S-T(config-if-range)#exit
+S-T(config)#int range giga 0/1-2
+S-T(config-if-range)#sw
+S-T(config-if-range)#switchport access vlan 30
+S-T(config-if-range)#sh
+
+%LINK-5-CHANGED: Interface GigabitEthernet0/1, changed state to administratively down
+
+%LINK-5-CHANGED: Interface GigabitEthernet0/2, changed state to administratively down
+S-T(config-if-range)#exit
+S-T(config)#do show vlan brief
+
+VLAN Name                             Status    Ports
+---- -------------------------------- --------- -------------------------------
+1    default                          active    
+10   Datos                            active    Fa0/1, Fa0/2, Fa0/3, Fa0/24
+20   Voz                              active    
+30   Reserva                          active    Fa0/4, Fa0/5, Fa0/6, Fa0/7
+                                                Fa0/8, Fa0/9, Fa0/10, Fa0/11
+                                                Fa0/12, Fa0/13, Fa0/14, Fa0/15
+                                                Fa0/16, Fa0/17, Fa0/18, Fa0/19
+                                                Fa0/20, Fa0/21, Fa0/22, Fa0/23
+                                                Gig0/1, Gig0/2
+1002 fddi-default                     active    
+1003 token-ring-default               active    
+1004 fddinet-default                  active    
+1005 trnet-default                    active    
+S-T(config)#
+
+S-T#ena
+S-T#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+S-T(config)#int range fa 0/1-3
+S-T(config-if-range)#sw
+S-T(config-if-range)#switchport mode access
+S-T(config-if-range)#sw
+S-T(config-if-range)#switchport port
+S-T(config-if-range)#exit
+S-T(config)#int fa 0/1
+S-T(config-if)#sw
+S-T(config-if)#switchport mode access
+S-T(config-if)#sw
+S-T(config-if)#switchport port
+S-T(config-if)#switchport port-security mac
+S-T(config-if)#switchport port-security mac-address 0060.7079.A101
+Port-security not enabled on interface FastEthernet0/1.
+S-T(config-if)#sw
+S-T(config-if)#switchport port
+S-T(config-if)#switchport port-security 
+S-T(config-if)#switchport port-security mac-address 0060.7079.A101
+S-T(config-if)#sw
+S-T(config-if)#switchport port
+S-T(config-if)#switchport port-security vio
+S-T(config-if)#switchport port-security max
+S-T(config-if)#switchport port-security maximum 1
+S-T(config-if)#sw
+S-T(config-if)#switchport port
+S-T(config-if)#switchport port-security vio
+S-T(config-if)#switchport port-security violation shu
+S-T(config-if)#switchport port-security violation shutdown 
+S-T(config-if)#exit
+S-T(config)#int fa 0/2
+S-T(config-if)#sw
+S-T(config-if)#switchport mode access
+S-T(config-if)#sw
+S-T(config-if)#switchport port
+S-T(config-if)#switchport port-security maxi
+S-T(config-if)#switchport port-security maximum 1
+S-T(config-if)#sw
+S-T(config-if)#switchport port
+S-T(config-if)#switchport port-security mac
+S-T(config-if)#switchport port-security mac-address 0060.2FB7.A051
+S-T(config-if)#sw
+S-T(config-if)#switchport port
+S-T(config-if)#switchport port-security vi
+S-T(config-if)#switchport port-security violation shu
+S-T(config-if)#switchport port-security violation shutdown 
+S-T(config-if)#sw
+S-T(config-if)#switchport por
+S-T(config-if)#switchport port-security 
+S-T(config-if)#exit
+S-T(config)#int fa 0/3
+S-T(config-if)#sw
+S-T(config-if)#switchport port
+S-T(config-if)#switchport port-security 
+S-T(config-if)#sw
+S-T(config-if)#switchport mode access
+S-T(config-if)#sw
+S-T(config-if)#switchport por
+S-T(config-if)#switchport port-security mac
+S-T(config-if)#switchport port-security mac-address 0040.0B43.2284
+S-T(config-if)#sw
+S-T(config-if)#switchport vio
+S-T(config-if)#switchport por
+S-T(config-if)#switchport port-security vio
+S-T(config-if)#switchport port-security violation shut
+S-T(config-if)#switchport port-security violation shutdown 
+S-T(config-if)#exit
+S-T(config)#end
+S-T#
+%SYS-5-CONFIG_I: Configured from console by console
+
+S-T#show por
+S-T#show port-security 
+Secure Port MaxSecureAddr CurrentAddr SecurityViolation Security Action
+               (Count)       (Count)        (Count)
+--------------------------------------------------------------------
+        Fa0/1        1          1                 0         Shutdown
+        Fa0/2        1          1                 0         Shutdown
+        Fa0/3        1          1                 0         Shutdown
+----------------------------------------------------------------------
+S-T#
+S-T(config)#vtp mode server
+Device mode already VTP SERVER.
+S-T(config)#vtp do
+S-T(config)#vtp domain chavita.com
+Changing VTP domain name from NULL to chavita.com
+S-T(config)#vtp 
+S-T(config)#vtp pas
+S-T(config)#vtp password admin
+Setting device VLAN database password to admin
+S-T(config)#exit
+S-T#
